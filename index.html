@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#102b4e">
+    <meta name="description" content="RentACar — find the right car for your next journey.">
+    <title>RentACar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <a class="brand" href="#home" aria-label="RentACar home">
+                <span class="brand-mark" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M5 11.5 6.7 6.8A2 2 0 0 1 8.6 5.5h6.8a2 2 0 0 1 1.9 1.3l1.7 4.7" />
+                        <path d="M4.2 11.5h15.6a1.7 1.7 0 0 1 1.7 1.7v3.1H2.5v-3.1a1.7 1.7 0 0 1 1.7-1.7Z" />
+                        <path d="M5.5 16.3v2m13-2v2M6 11.5l1-2.8h10l1 2.8M5.5 14.2h.1m12.8 0h.1" />
+                    </svg>
+                </span>
+                <span>Rent<span class="brand-accent">ACar</span></span>
+            </a>
+
+            <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="main-navigation">
+                <span></span><span></span><span></span>
+            </button>
+
+            <nav class="main-navigation" id="main-navigation" aria-label="Main navigation">
+                <a class="nav-link active" href="#home">Home</a>
+                <a class="nav-link" href="#about">About us</a>
+                <a class="nav-link" href="#cars">Cars</a>
+                <a class="nav-link" href="#terms">Rental Terms</a>
+                <a class="nav-link" href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero" id="home" role="img" aria-label="A car ready for a scenic road trip"></section>
+    </main>
+
+    <script>
+        const menuToggle = document.querySelector(".menu-toggle");
+        const navigation = document.querySelector("#main-navigation");
+
+        menuToggle.addEventListener("click", () => {
+            const isExpanded = menuToggle.getAttribute("aria-expanded") === "true";
+            menuToggle.setAttribute("aria-expanded", String(!isExpanded));
+            menuToggle.setAttribute("aria-label", isExpanded ? "Open navigation" : "Close navigation");
+            navigation.classList.toggle("navigation-open", !isExpanded);
+        });
+
+        navigation.querySelectorAll("a").forEach((link) => {
+            link.addEventListener("click", () => {
+                menuToggle.setAttribute("aria-expanded", "false");
+                menuToggle.setAttribute("aria-label", "Open navigation");
+                navigation.classList.remove("navigation-open");
+            });
+        });
+    </script>
+</body>
+</html>
