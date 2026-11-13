@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add car | Dashboard | RentACar</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <div class="dashboard">
+
+        <!-- Menuja anash -->
+        <aside class="sidebar">
+            <a class="logo" href="index.html">Rent<span>ACar</span></a>
+            <ul>
+                <li><a href="dashboard.html">Overview</a></li>
+                <li><a href="dashboard-cars.html">Cars</a></li>
+                <li><a class="active" href="dashboard-add-car.html">Add car</a></li>
+                <li><a href="dashboard-reservations.html">Reservations</a></li>
+                <li><a href="dashboard-clients.html">Clients</a></li>
+                <li><a href="dashboard-locations.html">Locations</a></li>
+            </ul>
+            <ul class="logout">
+                <li><a href="index.html">Back to site</a></li>
+                <li><a href="login.html">Log out</a></li>
+            </ul>
+        </aside>
+
+        <!-- Permbajtja -->
+        <main class="content">
+            <div class="top-bar">
+                <div>
+                    <h1>Add car</h1>
+                    <p>Add a new car to the fleet.</p>
+                </div>
+                <a class="btn" href="dashboard-cars.html">← Back to cars</a>
+            </div>
+
+            <div class="panel">
+                <form class="form-box" action="dashboard-cars.html">
+                    <div class="form-row">
+                        <label>Brand
+                            <input type="text" name="brand" placeholder="Toyota" required>
+                        </label>
+                        <label>Model
+                            <input type="text" name="model" placeholder="Yaris" required>
+                        </label>
+                    </div>
+                    <div class="form-row">
+                        <label>Category
+                            <select name="category">
+                                <option>Mini</option>
+                                <option>Economy</option>
+                                <option>Compact</option>
+                                <option>Comfort</option>
+                                <option>SUV</option>
+                                <option>Premium</option>
+                                <option>Premium SUV</option>
+                                <option>Electric</option>
+                                <option>Sports</option>
+                            </select>
+                        </label>
+                        <label>Location
+                            <select name="location">
+                                <option>Prishtina</option>
+                                <option>Prizren</option>
+                                <option>Peja</option>
+                                <option>Prishtina Airport</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="form-row">
+                        <label>Year
+                            <input type="number" name="year" min="2000" max="2027" placeholder="2024">
+                        </label>
+                        <label>Plate number
+                            <input type="text" name="plate" placeholder="01-123-AB">
+                        </label>
+                    </div>
+                    <div class="form-row">
+                        <label>Seats
+                            <input type="number" name="seats" min="2" max="9" value="5">
+                        </label>
+                        <label>Transmission
+                            <select name="transmission">
+                                <option>Automatic</option>
+                                <option>Manual</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="form-row">
+                        <label>Price per day (€)
+                            <input type="number" name="price" min="1" placeholder="35" required>
+                        </label>
+                        <label>Status
+                            <select name="status">
+                                <option>Available</option>
+                                <option>Rented</option>
+                                <option>Maintenance</option>
+                            </select>
+                        </label>
+                    </div>
+                    <label>Image URL
+                        <input type="url" name="image" placeholder="https://...">
+                    </label>
+                    <button class="btn" type="submit">Save car</button>
+                </form>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

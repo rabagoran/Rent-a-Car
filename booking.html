@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a car | RentACar</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container nav">
+            <a class="logo" href="index.html">Rent<span>ACar</span></a>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="cars.html">Cars</a></li>
+                <li><a href="about.html">About us</a></li>
+                <li><a href="terms.html">Rental terms</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="login.html">Log in</a></li>
+                <li><a class="btn-nav" href="booking.html">Book a car</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="page-title">
+        <div class="container">
+            <p class="breadcrumb"><a href="index.html">Home</a> / Book a car</p>
+            <h1>Book a car</h1>
+            <p>Choose a car, location and dates.</p>
+        </div>
+    </div>
+
+    <section>
+        <form class="form-box wide" action="dashboard.html">
+            <label>Car
+                <select name="car" required>
+                    <option>Fiat Panda - €27 / day</option>
+                    <option>Fiat 500 - €29 / day</option>
+                    <option>Mini Cooper - €52 / day</option>
+                    <option>Citroën C3 - €31 / day</option>
+                    <option>Toyota Yaris - €32 / day</option>
+                    <option>Opel Corsa - €33 / day</option>
+                    <option>Renault Clio - €34 / day</option>
+                    <option>Peugeot 208 - €36 / day</option>
+                    <option>Volkswagen Golf - €42 / day</option>
+                    <option>Audi A3 - €72 / day</option>
+                    <option>Mercedes-Benz A-Class - €79 / day</option>
+                    <option>Toyota Corolla - €46 / day</option>
+                    <option>Škoda Octavia - €49 / day</option>
+                    <option>Dacia Duster - €48 / day</option>
+                    <option>Kia Sportage - €61 / day</option>
+                    <option>Nissan Qashqai - €62 / day</option>
+                    <option>Hyundai Tucson - €64 / day</option>
+                    <option>Peugeot 3008 - €65 / day</option>
+                    <option>Mazda CX-5 - €67 / day</option>
+                    <option>Jeep Compass - €68 / day</option>
+                    <option>Volkswagen Tiguan - €70 / day</option>
+                    <option>BMW 3 Series - €74 / day</option>
+                    <option>BMW 5 Series - €105 / day</option>
+                    <option>Volvo XC40 - €86 / day</option>
+                    <option>Audi Q5 - €98 / day</option>
+                    <option>Land Rover Range Rover Evoque - €119 / day</option>
+                    <option>Tesla Model 3 - €89 / day</option>
+                    <option>Ford Mustang - €110 / day</option>
+                </select>
+            </label>
+            <label>Pick-up location
+                <select name="location" required>
+                    <option>Prishtina</option>
+                    <option>Prizren</option>
+                    <option>Peja</option>
+                    <option>Prishtina Airport</option>
+                </select>
+            </label>
+            <div class="form-row">
+                <label>Pick-up date
+                    <input type="date" name="from" required>
+                </label>
+                <label>Return date
+                    <input type="date" name="to" required>
+                </label>
+            </div>
+
+            <!-- Cmimi do te llogaritet me JS -->
+            <div class="summary">
+                <p><span>Price per day</span> <strong>-</strong></p>
+                <p><span>Days</span> <strong>-</strong></p>
+                <p><span>Total</span> <strong>€0</strong></p>
+            </div>
+
+            <label class="checkbox">
+                <input type="checkbox" required> I agree to the <a href="terms.html">rental terms</a>
+            </label>
+            <button class="btn" type="submit">Send reservation</button>
+        </form>
+    </section>
+
+    <footer>
+        <div class="container footer-inner">
+            <span>© 2026 RentACar</span>
+            <span>
+                <a href="contact.html">Contact</a>
+                <a href="terms.html">Rental terms</a>
+                <a href="photo-credits.html">Photo credits</a>
+                <a href="dashboard.html">Dashboard</a>
+            </span>
+        </div>
+    </footer>
+</body>
+</html>

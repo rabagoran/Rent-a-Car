@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | RentACar</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container nav">
+            <a class="logo" href="index.html">Rent<span>ACar</span></a>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="cars.html">Cars</a></li>
+                <li><a href="about.html">About us</a></li>
+                <li><a href="terms.html">Rental terms</a></li>
+                <li><a class="active" href="contact.html">Contact</a></li>
+                <li><a href="login.html">Log in</a></li>
+                <li><a class="btn-nav" href="booking.html">Book a car</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="page-title">
+        <div class="container">
+            <p class="breadcrumb"><a href="index.html">Home</a> / Contact</p>
+            <h1>Contact us</h1>
+            <p>Have a question? Send us a message.</p>
+        </div>
+    </div>
+
+    <section>
+        <div class="container two-cols">
+            <div class="contact-info">
+                <h2>Get in touch</h2>
+                <p><strong>Address:</strong> Prishtina, Kosovo</p>
+                <p><strong>Phone:</strong> +383 44 000 000</p>
+                <p><strong>Email:</strong> info@rentacar.com</p>
+                <p><strong>Working hours:</strong> Mon - Sat, 08:00 - 20:00</p>
+            </div>
+
+            <form class="form-box" action="contact.html">
+                <div class="form-row">
+                    <label>Your name
+                        <input type="text" name="name" required>
+                    </label>
+                    <label>Email
+                        <input type="email" name="email" required>
+                    </label>
+                </div>
+                <label>Subject
+                    <input type="text" name="subject" required>
+                </label>
+                <label>Message
+                    <textarea name="message" required></textarea>
+                </label>
+                <button class="btn" type="submit">Send message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-inner">
+            <span>© 2026 RentACar</span>
+            <span>
+                <a href="contact.html">Contact</a>
+                <a href="terms.html">Rental terms</a>
+                <a href="photo-credits.html">Photo credits</a>
+                <a href="dashboard.html">Dashboard</a>
+            </span>
+        </div>
+    </footer>
+</body>
+</html>

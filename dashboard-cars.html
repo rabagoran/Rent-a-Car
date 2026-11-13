@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cars | Dashboard | RentACar</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <div class="dashboard">
+
+        <!-- Menuja anash -->
+        <aside class="sidebar">
+            <a class="logo" href="index.html">Rent<span>ACar</span></a>
+            <ul>
+                <li><a href="dashboard.html">Overview</a></li>
+                <li><a class="active" href="dashboard-cars.html">Cars</a></li>
+                <li><a href="dashboard-add-car.html">Add car</a></li>
+                <li><a href="dashboard-reservations.html">Reservations</a></li>
+                <li><a href="dashboard-clients.html">Clients</a></li>
+                <li><a href="dashboard-locations.html">Locations</a></li>
+            </ul>
+            <ul class="logout">
+                <li><a href="index.html">Back to site</a></li>
+                <li><a href="login.html">Log out</a></li>
+            </ul>
+        </aside>
+
+        <!-- Permbajtja -->
+        <main class="content">
+            <div class="top-bar">
+                <div>
+                    <h1>Cars</h1>
+                    <p>All cars in the fleet.</p>
+                </div>
+                <a class="btn" href="dashboard-add-car.html">+ Add car</a>
+            </div>
+
+            <div class="panel">
+                <table>
+                    <tr>
+                        <th>#</th>
+                        <th>Car</th>
+                        <th>Category</th>
+                        <th>Year</th>
+                        <th>Seats</th>
+                        <th>Transmission</th>
+                        <th>Fuel</th>
+                        <th>Price / day</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                    <tr>
+                        <td class="empty" colspan="10">No cars yet.</td>
+                    </tr>
+                </table>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
