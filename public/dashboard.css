@@ -204,6 +204,17 @@ tr:hover td {
     background: #c0392b;
 }
 
+button.btn-small {
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+/* Forma e vogel brenda tabeles (butonat Delete, Confirm, Cancel) */
+form.inline {
+    display: inline;
+}
+
 /* Forma ne dashboard */
 .panel .form-box {
     max-width: 700px;

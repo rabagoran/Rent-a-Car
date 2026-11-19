@@ -23,7 +23,7 @@
             </ul>
             <ul class="logout">
                 <li><a href="index.html">Back to site</a></li>
-                <li><a href="login.html">Log out</a></li>
+                <li><a href="/api/logout">Log out</a></li>
             </ul>
         </aside>
 
@@ -31,14 +31,17 @@
         <main class="content">
             <div class="top-bar">
                 <div>
-                    <h1>Add car</h1>
-                    <p>Add a new car to the fleet.</p>
+                    <h1 id="form-title">Add car</h1>
+                    <p>Fill in the details of the car.</p>
                 </div>
                 <a class="btn" href="dashboard-cars.html">← Back to cars</a>
             </div>
 
+            <p class="message" id="message"></p>
+
             <div class="panel">
-                <form class="form-box" action="dashboard-cars.html">
+                <!-- Kur behet Edit, js/dashboard-add-car.js e ndryshon action ne /api/cars/ID -->
+                <form class="form-box" id="car-form" method="post" action="/api/cars">
                     <div class="form-row">
                         <label>Brand
                             <input type="text" name="brand" placeholder="Toyota" required>
@@ -48,31 +51,17 @@
                         </label>
                     </div>
                     <div class="form-row">
+                        <!-- Kategorite dhe lokacionet mbushen nga databaza -->
                         <label>Category
-                            <select name="category">
-                                <option>Mini</option>
-                                <option>Economy</option>
-                                <option>Compact</option>
-                                <option>Comfort</option>
-                                <option>SUV</option>
-                                <option>Premium</option>
-                                <option>Premium SUV</option>
-                                <option>Electric</option>
-                                <option>Sports</option>
-                            </select>
+                            <select name="category_id" id="category-select" required></select>
                         </label>
                         <label>Location
-                            <select name="location">
-                                <option>Prishtina</option>
-                                <option>Prizren</option>
-                                <option>Peja</option>
-                                <option>Prishtina Airport</option>
-                            </select>
+                            <select name="location_id" id="location-select" required></select>
                         </label>
                     </div>
                     <div class="form-row">
                         <label>Year
-                            <input type="number" name="year" min="2000" max="2027" placeholder="2024">
+                            <input type="number" name="year" min="1990" max="2100" placeholder="2024" required>
                         </label>
                         <label>Plate number
                             <input type="text" name="plate" placeholder="01-123-AB">
@@ -80,34 +69,47 @@
                     </div>
                     <div class="form-row">
                         <label>Seats
-                            <input type="number" name="seats" min="2" max="9" value="5">
+                            <input type="number" name="seats" min="2" max="9" value="5" required>
                         </label>
                         <label>Transmission
                             <select name="transmission">
-                                <option>Automatic</option>
-                                <option>Manual</option>
+                                <option value="AUTOMATIC">Automatic</option>
+                                <option value="MANUAL">Manual</option>
                             </select>
                         </label>
                     </div>
                     <div class="form-row">
-                        <label>Price per day (€)
-                            <input type="number" name="price" min="1" placeholder="35" required>
-                        </label>
-                        <label>Status
-                            <select name="status">
-                                <option>Available</option>
-                                <option>Rented</option>
-                                <option>Maintenance</option>
+                        <label>Fuel
+                            <select name="fuel_type">
+                                <option value="PETROL">Petrol</option>
+                                <option value="DIESEL">Diesel</option>
+                                <option value="HYBRID">Hybrid</option>
+                                <option value="ELECTRIC">Electric</option>
                             </select>
                         </label>
+                        <label>Price per day (€)
+                            <input type="number" name="price" min="1" step="0.01" placeholder="35" required>
+                        </label>
                     </div>
-                    <label>Image URL
-                        <input type="url" name="image" placeholder="https://...">
-                    </label>
-                    <button class="btn" type="submit">Save car</button>
+                    <div class="form-row">
+                        <label>Status
+                            <select name="status">
+                                <option value="AVAILABLE">Available</option>
+                                <option value="RENTED">Rented</option>
+                                <option value="MAINTENANCE">Maintenance</option>
+                            </select>
+                        </label>
+                        <label>Image
+                            <input type="text" name="image" placeholder="images/cars/toyota-yaris.jpg">
+                        </label>
+                    </div>
+                    <button class="btn" id="save-button" type="submit">Save car</button>
                 </form>
             </div>
         </main>
     </div>
+
+    <script src="js/helpers.js"></script>
+    <script src="js/dashboard-add-car.js"></script>
 </body>
 </html>

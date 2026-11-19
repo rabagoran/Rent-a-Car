@@ -85,52 +85,8 @@
                 <h2>Popular cars</h2>
                 <p>A few of our favourites, ready for your next trip.</p>
             </div>
-            <div class="cars">
-                <div class="car">
-                    <img src="images/cars/toyota-yaris.jpg" alt="Toyota Yaris">
-                    <div class="car-info">
-                        <h3>Toyota Yaris</h3>
-                        <p>Economy · 5 seats · Automatic</p>
-                        <div class="car-price">
-                            <strong>€32 / day</strong>
-                            <a class="btn" href="booking.html">Book</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="car">
-                    <img src="images/cars/volkswagen-golf.jpg" alt="Volkswagen Golf">
-                    <div class="car-info">
-                        <h3>Volkswagen Golf</h3>
-                        <p>Compact · 5 seats · Manual</p>
-                        <div class="car-price">
-                            <strong>€42 / day</strong>
-                            <a class="btn" href="booking.html">Book</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="car">
-                    <img src="images/cars/bmw-3-series.jpg" alt="BMW 3 Series">
-                    <div class="car-info">
-                        <h3>BMW 3 Series</h3>
-                        <p>Premium · 5 seats · Automatic</p>
-                        <div class="car-price">
-                            <strong>€74 / day</strong>
-                            <a class="btn" href="booking.html">Book</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="car">
-                    <img src="images/cars/jeep-compass.jpg" alt="Jeep Compass">
-                    <div class="car-info">
-                        <h3>Jeep Compass</h3>
-                        <p>SUV · 5 seats · Automatic</p>
-                        <div class="car-price">
-                            <strong>€68 / day</strong>
-                            <a class="btn" href="booking.html">Book</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- 4 veturat vijne nga databaza (js/cars.js) -->
+            <div class="cars" id="car-list" data-limit="4"></div>
             <p class="center"><a class="btn" href="cars.html">See all cars</a></p>
         </div>
     </section>
@@ -146,5 +102,7 @@
             </span>
         </div>
     </footer>
+    <script src="js/cars.js"></script>
+    <script src="js/nav.js"></script>
 </body>
 </html>

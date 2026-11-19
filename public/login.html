@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in | RentACar</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container nav">
+            <a class="logo" href="index.html">Rent<span>ACar</span></a>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="cars.html">Cars</a></li>
+                <li><a href="about.html">About us</a></li>
+                <li><a href="terms.html">Rental terms</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a class="active" href="login.html">Log in</a></li>
+                <li><a class="btn-nav" href="booking.html">Book a car</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="page-title">
+        <div class="container">
+            <p class="breadcrumb"><a href="index.html">Home</a> / Log in</p>
+            <h1>Log in</h1>
+            <p>Access your bookings and manage your next trip.</p>
+        </div>
+    </div>
+
+    <section>
+        <form class="form-box" method="post" action="/api/login">
+            <p class="message" id="message"></p>
+            <label>Email
+                <input type="email" name="email" placeholder="you@example.com" required>
+            </label>
+            <label>Password
+                <input type="password" name="password" required>
+            </label>
+            <button class="btn" type="submit">Log in</button>
+            <p class="form-link">New to RentACar? <a href="signup.html">Create an account</a></p>
+        </form>
+    </section>
+
+    <footer>
+        <div class="container footer-inner">
+            <span>© 2026 RentACar</span>
+            <span>
+                <a href="contact.html">Contact</a>
+                <a href="terms.html">Rental terms</a>
+                <a href="photo-credits.html">Photo credits</a>
+                <a href="dashboard.html">Dashboard</a>
+            </span>
+        </div>
+    </footer>
+    <script src="js/helpers.js"></script>
+    <script src="js/nav.js"></script>
+</body>
+</html>

@@ -40,7 +40,8 @@
                 <p><strong>Working hours:</strong> Mon - Sat, 08:00 - 20:00</p>
             </div>
 
-            <form class="form-box" action="contact.html">
+            <form class="form-box" method="post" action="/api/contact">
+                <p class="message" id="message"></p>
                 <div class="form-row">
                     <label>Your name
                         <input type="text" name="name" required>
@@ -71,5 +72,7 @@
             </span>
         </div>
     </footer>
+    <script src="js/helpers.js"></script>
+    <script src="js/nav.js"></script>
 </body>
 </html>

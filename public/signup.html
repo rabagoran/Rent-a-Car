@@ -31,7 +31,8 @@
     </div>
 
     <section>
-        <form class="form-box" action="login.html">
+        <form class="form-box" method="post" action="/api/signup">
+            <p class="message" id="message"></p>
             <div class="form-row">
                 <label>First name
                     <input type="text" name="first_name" required>
@@ -68,5 +69,7 @@
             </span>
         </div>
     </footer>
+    <script src="js/helpers.js"></script>
+    <script src="js/nav.js"></script>
 </body>
 </html>

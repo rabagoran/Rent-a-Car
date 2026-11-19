@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | RentACar</title>
+    <title>Reservations | Dashboard | RentACar</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="dashboard.css">
 </head>
@@ -14,16 +14,16 @@
         <aside class="sidebar">
             <a class="logo" href="index.html">Rent<span>ACar</span></a>
             <ul>
-                <li><a class="active" href="dashboard.html">Overview</a></li>
+                <li><a href="dashboard.html">Overview</a></li>
                 <li><a href="dashboard-cars.html">Cars</a></li>
                 <li><a href="dashboard-add-car.html">Add car</a></li>
-                <li><a href="dashboard-reservations.html">Reservations</a></li>
+                <li><a class="active" href="dashboard-reservations.html">Reservations</a></li>
                 <li><a href="dashboard-clients.html">Clients</a></li>
                 <li><a href="dashboard-locations.html">Locations</a></li>
             </ul>
             <ul class="logout">
                 <li><a href="index.html">Back to site</a></li>
-                <li><a href="login.html">Log out</a></li>
+                <li><a href="/api/logout">Log out</a></li>
             </ul>
         </aside>
 
@@ -31,58 +31,59 @@
         <main class="content">
             <div class="top-bar">
                 <div>
-                    <h1>Welcome back, Admin</h1>
-                    <p>Here is what is happening with RentACar today.</p>
+                    <h1>Reservations</h1>
+                    <p>Review requests and update their status.</p>
                 </div>
-                <a class="btn" href="dashboard-add-car.html">+ Add car</a>
             </div>
 
-            <!-- Numrat -->
+            <p class="message" id="message"></p>
+
             <div class="stats">
                 <div class="stat">
-                    <span>Total cars</span>
-                    <strong>0</strong>
+                    <span>All</span>
+                    <strong id="count-all">0</strong>
                 </div>
                 <div class="stat">
-                    <span>Available cars</span>
-                    <strong>0</strong>
+                    <span>Pending</span>
+                    <strong id="count-pending">0</strong>
                 </div>
                 <div class="stat">
-                    <span>Pending reservations</span>
-                    <strong>0</strong>
+                    <span>Confirmed</span>
+                    <strong id="count-confirmed">0</strong>
                 </div>
                 <div class="stat">
-                    <span>Clients</span>
-                    <strong>0</strong>
+                    <span>Cancelled</span>
+                    <strong id="count-cancelled">0</strong>
                 </div>
             </div>
 
-            <!-- Rezervimet e fundit -->
             <div class="panel">
-                <h2>Latest reservations</h2>
                 <table>
+                    <thead>
                     <tr>
                         <th>#</th>
                         <th>Client</th>
                         <th>Car</th>
-                        <th>Dates</th>
+                        <th>Location</th>
+                        <th>Pick-up</th>
+                        <th>Return</th>
                         <th>Total</th>
                         <th>Status</th>
+                        <th>Actions</th>
                     </tr>
+                    </thead>
+                    <!-- Rezervimet vijne nga databaza (js/dashboard-reservations.js) -->
+                    <tbody id="reservation-rows">
                     <tr>
-                        <td class="empty" colspan="6">No reservations yet.</td>
+                        <td class="empty" colspan="9">Loading...</td>
                     </tr>
+                    </tbody>
                 </table>
-                <p><a href="dashboard-reservations.html">See all reservations →</a></p>
-            </div>
-
-            <!-- Veturat -->
-            <div class="panel">
-                <h2>Fleet</h2>
-                <p class="empty">No cars yet.</p>
-                <p><a href="dashboard-cars.html">See all cars →</a></p>
             </div>
         </main>
     </div>
+
+    <script src="js/helpers.js"></script>
+    <script src="js/dashboard-reservations.js"></script>
 </body>
 </html>
