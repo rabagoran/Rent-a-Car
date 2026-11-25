@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports | Dashboard | RentACar</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <div class="dashboard">
+
+        <!-- Menuja anash -->
+        <aside class="sidebar">
+            <a class="logo" href="index.html">Rent<span>ACar</span></a>
+            <ul>
+                <li><a href="dashboard.html">Overview</a></li>
+                <li><a href="dashboard-cars.html">Cars</a></li>
+                <li><a href="dashboard-add-car.html">Add car</a></li>
+                <li><a href="dashboard-reservations.html">Reservations</a></li>
+                <li><a href="dashboard-clients.html">Clients</a></li>
+                <li><a href="dashboard-locations.html">Locations</a></li>
+                <li><a href="dashboard-messages.html">Messages</a></li>
+                <li><a class="active" href="dashboard-reports.html">Reports</a></li>
+            </ul>
+            <ul class="logout">
+                <li><a href="index.html">Back to site</a></li>
+                <li><a href="/api/logout">Log out</a></li>
+            </ul>
+        </aside>
+
+        <!-- Permbajtja -->
+        <main class="content">
+            <div class="top-bar">
+                <div>
+                    <h1>Reports</h1>
+                    <p>Revenue and bookings from the database.</p>
+                </div>
+            </div>
+
+            <!-- Numrat kryesore (js/dashboard-reports.js) -->
+            <div class="stats">
+                <div class="stat">
+                    <span>Total revenue</span>
+                    <strong id="revenue">€0</strong>
+                </div>
+                <div class="stat">
+                    <span>Confirmed bookings</span>
+                    <strong id="bookings">0</strong>
+                </div>
+                <div class="stat">
+                    <span>Average booking</span>
+                    <strong id="average">€0</strong>
+                </div>
+                <div class="stat">
+                    <span>Most booked car</span>
+                    <strong class="stat-text" id="top-car">-</strong>
+                </div>
+            </div>
+
+            <div class="report-grid">
+                <div class="panel">
+                    <h2>Revenue by month</h2>
+                    <div id="by-month"></div>
+                </div>
+                <div class="panel">
+                    <h2>Most booked cars</h2>
+                    <div id="top-cars"></div>
+                </div>
+                <div class="panel">
+                    <h2>Bookings by status</h2>
+                    <div id="by-status"></div>
+                </div>
+                <div class="panel">
+                    <h2>Bookings by location</h2>
+                    <div id="by-location"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/helpers.js"></script>
+    <script src="js/dashboard-reports.js"></script>
+</body>
+</html>

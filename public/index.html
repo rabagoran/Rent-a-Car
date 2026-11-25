@@ -25,32 +25,28 @@
     <!-- Hero -->
     <div class="hero">
         <div class="container">
+            <p class="eyebrow">Car rental in Kosovo</p>
             <h1>Find your way.<br>Enjoy the ride.</h1>
             <p>The right car makes every trip better. Choose yours and hit the road with confidence.</p>
             <a class="btn btn-light" href="cars.html">Explore our cars</a>
         </div>
     </div>
 
-    <!-- Kerkimi -->
+    <!-- Kerkimi: dergon lokacionin dhe datat te cars.html -->
     <div class="container">
-        <form class="search-box" action="cars.html">
+        <form class="search-box" id="filter-form" action="cars.html">
             <label>Pick-up location
-                <select name="location">
-                    <option>Prishtina</option>
-                    <option>Prizren</option>
-                    <option>Peja</option>
-                    <option>Prishtina Airport</option>
+                <select name="location" id="location-filter">
+                    <option value="">Any location</option>
                 </select>
             </label>
             <label>Pick-up date
                 <input type="date" name="from">
             </label>
-            <label>Drop-off date
+            <label>Return date
                 <input type="date" name="to">
             </label>
-            <label>
-                <button class="btn" type="submit">Find a car</button>
-            </label>
+            <button class="btn" type="submit">Find a car</button>
         </form>
     </div>
 
@@ -58,19 +54,22 @@
     <section>
         <div class="container">
             <div class="section-title">
-                <h2>Why RentACar?</h2>
-                <p>Good trips start with good choices.</p>
+                <p class="eyebrow">Why RentACar</p>
+                <h2>Good trips start with good choices</h2>
             </div>
             <div class="features">
                 <div class="feature">
+                    <span class="feature-number">01</span>
                     <h3>Cars for every journey</h3>
                     <p>City cars, family cars, SUVs and premium cars.</p>
                 </div>
                 <div class="feature">
+                    <span class="feature-number">02</span>
                     <h3>Clear prices</h3>
                     <p>The daily price is shown before you book. No surprises.</p>
                 </div>
                 <div class="feature">
+                    <span class="feature-number">03</span>
                     <h3>Friendly help</h3>
                     <p>Our team is here when you need it.</p>
                 </div>
@@ -82,8 +81,8 @@
     <section class="section-gray">
         <div class="container">
             <div class="section-title">
+                <p class="eyebrow">Our fleet</p>
                 <h2>Popular cars</h2>
-                <p>A few of our favourites, ready for your next trip.</p>
             </div>
             <!-- 4 veturat vijne nga databaza (js/cars.js) -->
             <div class="cars" id="car-list" data-limit="4"></div>
@@ -102,6 +101,7 @@
             </span>
         </div>
     </footer>
+    <script src="js/helpers.js"></script>
     <script src="js/cars.js"></script>
     <script src="js/nav.js"></script>
 </body>

@@ -67,6 +67,14 @@ const today = new Date().toISOString().slice(0, 10);
 startDate.min = today;
 endDate.min = today;
 
+// Nese erdhem nga kerkimi me data (booking.html?car=5&from=...&to=...), plotesoji
+if (params.get("from")) {
+    startDate.value = params.get("from");
+}
+if (params.get("to")) {
+    endDate.value = params.get("to");
+}
+
 // 4. Llogarit cmimin: ditet x cmimi per dite
 function updatePrice() {
     const selected = carSelect.options[carSelect.selectedIndex];

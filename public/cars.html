@@ -32,6 +32,51 @@
 
     <section>
         <div class="container">
+            <!-- Filtrat: forma dergon te dhenat ne adrese (?category=...), js/cars.js i lexon -->
+            <form class="filters" id="filter-form" action="cars.html">
+                <label>Pick-up location
+                    <select name="location" id="location-filter">
+                        <option value="">Any location</option>
+                    </select>
+                </label>
+                <label>Pick-up date
+                    <input type="date" name="from">
+                </label>
+                <label>Return date
+                    <input type="date" name="to">
+                </label>
+                <label>Category
+                    <select name="category" id="category-filter">
+                        <option value="">All categories</option>
+                    </select>
+                </label>
+                <label>Transmission
+                    <select name="transmission">
+                        <option value="">Any</option>
+                        <option value="AUTOMATIC">Automatic</option>
+                        <option value="MANUAL">Manual</option>
+                    </select>
+                </label>
+                <label>Fuel
+                    <select name="fuel">
+                        <option value="">Any</option>
+                        <option value="PETROL">Petrol</option>
+                        <option value="DIESEL">Diesel</option>
+                        <option value="HYBRID">Hybrid</option>
+                        <option value="ELECTRIC">Electric</option>
+                    </select>
+                </label>
+                <label>Max price / day
+                    <input type="number" name="max_price" min="1" placeholder="€ any">
+                </label>
+                <div class="filter-buttons">
+                    <button class="btn" type="submit">Search</button>
+                    <a class="btn btn-outline" href="cars.html">Clear</a>
+                </div>
+            </form>
+
+            <p class="results" id="results-count"></p>
+
             <!-- Veturat vijne nga databaza (js/cars.js) -->
             <div class="cars" id="car-list"></div>
         </div>
@@ -48,6 +93,7 @@
             </span>
         </div>
     </footer>
+    <script src="js/helpers.js"></script>
     <script src="js/cars.js"></script>
     <script src="js/nav.js"></script>
 </body>

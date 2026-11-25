@@ -289,17 +289,61 @@ app.post("/api/my-reservations/:id/cancel", async (req, res) => {
 
 // ---------- Veturat, kategorite, lokacionet ----------
 
-// Te gjitha veturat
+// Veturat, me filtra opsionale nga adresa, p.sh.
+// /api/cars?category=5&transmission=AUTOMATIC&max_price=60&from=2026-12-10&to=2026-12-13
 app.get("/api/cars", async (req, res) => {
+    const f = req.query;   // filtrat qe vijne nga adresa
+
     try {
         const pool = await db;
-        const result = await pool.request().query(`
+        const request = pool.request();
+
+        // Fillojme me "te gjitha" dhe shtojme nje kusht per secilin filter te zgjedhur
+        let where = "WHERE 1 = 1";
+
+        if (f.category) {
+            where += " AND c.category_id = @category";
+            request.input("category", f.category);
+        }
+        if (f.location) {
+            where += " AND c.location_id = @location";
+            request.input("location", f.location);
+        }
+        if (f.transmission) {
+            where += " AND c.transmission = @transmission";
+            request.input("transmission", f.transmission);
+        }
+        if (f.fuel) {
+            where += " AND c.fuel_type = @fuel";
+            request.input("fuel", f.fuel);
+        }
+        if (f.max_price) {
+            where += " AND c.price_per_day <= @max_price";
+            request.input("max_price", f.max_price);
+        }
+
+        // Nese jane zgjedhur datat: vetem veturat e lira ne ato data
+        if (f.from && f.to) {
+            where += ` AND c.status <> 'MAINTENANCE'
+                       AND NOT EXISTS (
+                           SELECT 1 FROM reservations r
+                           WHERE r.car_id = c.id
+                             AND r.status IN ('PENDING', 'CONFIRMED')
+                             AND r.start_date < @to
+                             AND @from < r.end_date
+                       )`;
+            request.input("from", f.from);
+            request.input("to", f.to);
+        }
+
+        const result = await request.query(`
             SELECT c.id, c.brand, c.model, c.year, c.seats, c.transmission,
                    c.fuel_type, c.price_per_day, c.image_url,
                    ${CAR_STATUS} AS status,
                    cat.name AS category
             FROM cars c
             JOIN categories cat ON cat.id = c.category_id
+            ${where}
             ORDER BY c.price_per_day
         `);
         res.json(result.recordset);
@@ -482,6 +526,64 @@ app.post("/api/cars/:id/delete", adminOnly, async (req, res) => {
     } catch (err) {
         back(res, "/dashboard-cars.html", "error", "This car has reservations, so it can't be deleted.");
     }
+});
+
+// Raportet per dashboardin
+app.get("/api/reports", adminOnly, async (req, res) => {
+    const pool = await db;
+
+    // 1. Te ardhurat totale (rezervimet e konfirmuara dhe te perfunduara)
+    const total = await pool.request().query(`
+        SELECT ISNULL(SUM(total_price), 0) AS revenue, COUNT(*) AS bookings
+        FROM reservations
+        WHERE status IN ('CONFIRMED', 'COMPLETED')
+    `);
+
+    // 2. Te ardhurat sipas muajit
+    const byMonth = await pool.request().query(`
+        SELECT FORMAT(start_date, 'MM.yyyy') AS month,
+               SUM(total_price) AS revenue,
+               COUNT(*) AS bookings
+        FROM reservations
+        WHERE status IN ('CONFIRMED', 'COMPLETED')
+        GROUP BY FORMAT(start_date, 'MM.yyyy'), YEAR(start_date), MONTH(start_date)
+        ORDER BY YEAR(start_date), MONTH(start_date)
+    `);
+
+    // 3. 5 veturat me me shume rezervime
+    const topCars = await pool.request().query(`
+        SELECT TOP 5 c.brand + ' ' + c.model AS car, COUNT(*) AS bookings
+        FROM reservations r
+        JOIN cars c ON c.id = r.car_id
+        WHERE r.status <> 'CANCELLED'
+        GROUP BY c.brand, c.model
+        ORDER BY COUNT(*) DESC
+    `);
+
+    // 4. Rezervimet sipas statusit
+    const byStatus = await pool.request().query(`
+        SELECT status, COUNT(*) AS bookings
+        FROM reservations
+        GROUP BY status
+    `);
+
+    // 5. Rezervimet sipas lokacionit
+    const byLocation = await pool.request().query(`
+        SELECT l.name AS location, COUNT(r.id) AS bookings
+        FROM locations l
+        LEFT JOIN reservations r ON r.pickup_location_id = l.id AND r.status <> 'CANCELLED'
+        GROUP BY l.name
+        ORDER BY COUNT(r.id) DESC
+    `);
+
+    res.json({
+        revenue: total.recordset[0].revenue,
+        bookings: total.recordset[0].bookings,
+        byMonth: byMonth.recordset,
+        topCars: topCars.recordset,
+        byStatus: byStatus.recordset,
+        byLocation: byLocation.recordset
+    });
 });
 
 // Mesazhet nga forma Contact

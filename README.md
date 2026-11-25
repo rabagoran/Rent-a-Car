@@ -82,6 +82,13 @@ The site must be opened through the server (not by double-clicking the files).
 - `dashboard-messages.html` - the admin reads the messages sent from the Contact page and can delete them.
 - `public/js/my-reservations.js` and `public/js/dashboard-messages.js` fill these pages from the database.
 
+## Step 7: Search, reports and new design
+
+- **Search and filters**: the home page search (location and dates) opens `cars.html` with only the cars that are free on those dates. `cars.html` also filters by category, transmission, fuel and max price. The filters go in the address (`cars.html?category=5&from=...`), and `/api/cars` reads them.
+- The **Book** button takes the chosen dates to `booking.html`.
+- **Reports** (`dashboard-reports.html`): total revenue, confirmed bookings, average booking, most booked car, revenue by month, and bookings by car, status and location.
+- **Design**: new fonts (Playfair Display for titles, Inter for text), a calm navy and soft gold colour palette, rounded cards with soft shadows, and a cleaner header, hero, forms and dashboard.
+
 ## Step 6: Car availability
 
 - On `booking.html`, under the chosen car, the page shows the dates when the car is already booked (pending or confirmed), so the client can pick free dates.
