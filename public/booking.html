@@ -31,61 +31,32 @@
     </div>
 
     <section>
-        <form class="form-box wide" action="booking.html">
+        <form class="form-box wide" method="post" action="/api/bookings">
+            <p class="message" id="message"></p>
+
+            <!-- Veturat dhe lokacionet mbushen nga databaza (js/booking.js) -->
             <label>Car
-                <select name="car" required>
-                    <option>Fiat Panda - €27 / day</option>
-                    <option>Fiat 500 - €29 / day</option>
-                    <option>Mini Cooper - €52 / day</option>
-                    <option>Citroën C3 - €31 / day</option>
-                    <option>Toyota Yaris - €32 / day</option>
-                    <option>Opel Corsa - €33 / day</option>
-                    <option>Renault Clio - €34 / day</option>
-                    <option>Peugeot 208 - €36 / day</option>
-                    <option>Volkswagen Golf - €42 / day</option>
-                    <option>Audi A3 - €72 / day</option>
-                    <option>Mercedes-Benz A-Class - €79 / day</option>
-                    <option>Toyota Corolla - €46 / day</option>
-                    <option>Škoda Octavia - €49 / day</option>
-                    <option>Dacia Duster - €48 / day</option>
-                    <option>Kia Sportage - €61 / day</option>
-                    <option>Nissan Qashqai - €62 / day</option>
-                    <option>Hyundai Tucson - €64 / day</option>
-                    <option>Peugeot 3008 - €65 / day</option>
-                    <option>Mazda CX-5 - €67 / day</option>
-                    <option>Jeep Compass - €68 / day</option>
-                    <option>Volkswagen Tiguan - €70 / day</option>
-                    <option>BMW 3 Series - €74 / day</option>
-                    <option>BMW 5 Series - €105 / day</option>
-                    <option>Volvo XC40 - €86 / day</option>
-                    <option>Audi Q5 - €98 / day</option>
-                    <option>Land Rover Range Rover Evoque - €119 / day</option>
-                    <option>Tesla Model 3 - €89 / day</option>
-                    <option>Ford Mustang - €110 / day</option>
-                </select>
+                <select name="car_id" id="car-select" required></select>
             </label>
+            <!-- Datat kur vetura eshte e zene (js/booking.js) -->
+            <p class="booked" id="booked-dates"></p>
             <label>Pick-up location
-                <select name="location" required>
-                    <option>Prishtina</option>
-                    <option>Prizren</option>
-                    <option>Peja</option>
-                    <option>Prishtina Airport</option>
-                </select>
+                <select name="location_id" id="location-select" required></select>
             </label>
             <div class="form-row">
                 <label>Pick-up date
-                    <input type="date" name="from" required>
+                    <input type="date" name="start_date" id="start-date" required>
                 </label>
                 <label>Return date
-                    <input type="date" name="to" required>
+                    <input type="date" name="end_date" id="end-date" required>
                 </label>
             </div>
 
-            <!-- Cmimi do te llogaritet me JS -->
+            <!-- Cmimi llogaritet me JS: ditet x cmimi per dite -->
             <div class="summary">
-                <p><span>Price per day</span> <strong>-</strong></p>
-                <p><span>Days</span> <strong>-</strong></p>
-                <p><span>Total</span> <strong>€0</strong></p>
+                <p><span>Price per day</span> <strong id="price-day">-</strong></p>
+                <p><span>Days</span> <strong id="days">-</strong></p>
+                <p><span>Total</span> <strong id="total">€0</strong></p>
             </div>
 
             <label class="checkbox">
@@ -106,6 +77,8 @@
             </span>
         </div>
     </footer>
+    <script src="js/helpers.js"></script>
+    <script src="js/booking.js"></script>
     <script src="js/nav.js"></script>
 </body>
 </html>

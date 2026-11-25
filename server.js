@@ -9,6 +9,23 @@ const { hashPassword, checkPassword } = require("./password");
 const app = express();
 const PORT = 4500;
 
+// Statusi i vetures llogaritet automatikisht:
+// - MAINTENANCE: kur admini e ka vendos ne servis
+// - RENTED: kur sot eshte brenda nje rezervimi te konfirmuar
+// - perndryshe: statusi qe ka vendos admini (zakonisht AVAILABLE)
+const CAR_STATUS = `
+    CASE
+        WHEN c.status = 'MAINTENANCE' THEN 'MAINTENANCE'
+        WHEN EXISTS (
+            SELECT 1 FROM reservations r
+            WHERE r.car_id = c.id
+              AND r.status = 'CONFIRMED'
+              AND CAST(GETDATE() AS DATE) >= r.start_date
+              AND CAST(GETDATE() AS DATE) < r.end_date
+        ) THEN 'RENTED'
+        ELSE c.status
+    END`;
+
 // Lexon te dhenat qe vijne nga format HTML
 app.use(express.urlencoded({ extended: false }));
 
@@ -37,7 +54,8 @@ function adminOnly(req, res, next) {
 
 // Kthen ne nje faqe me mesazh, p.sh. /login.html?error=...
 function back(res, page, type, text) {
-    res.redirect(page + "?" + type + "=" + encodeURIComponent(text));
+    const sign = page.includes("?") ? "&" : "?";   // nese adresa ka "?", shtojme me "&"
+    res.redirect(page + sign + type + "=" + encodeURIComponent(text));
 }
 
 // ---------- Faqet ----------
@@ -46,6 +64,14 @@ function back(res, page, type, text) {
 app.use((req, res, next) => {
     if (req.path.startsWith("/dashboard") && !isAdmin(req)) {
         return back(res, "/login.html", "error", "Please log in as admin to open the dashboard.");
+    }
+    next();
+});
+
+// Faqja "My reservations" hapet vetem kur je i kycur
+app.use((req, res, next) => {
+    if (req.path === "/my-reservations.html" && !req.session.user) {
+        return back(res, "/login.html", "error", "Please log in to see your reservations.");
     }
     next();
 });
@@ -148,6 +174,119 @@ app.post("/api/contact", async (req, res) => {
     }
 });
 
+// ---------- Booking ----------
+
+// Ruan rezervimin e klientit si PENDING
+app.post("/api/bookings", async (req, res) => {
+    const user = req.session.user;
+    const { car_id, location_id, start_date, end_date } = req.body;
+
+    // 1. Vetem klientet e kycur mund te rezervojne
+    if (!user) {
+        return back(res, "/login.html", "error", "Please log in to book a car.");
+    }
+    if (user.role !== "CLIENT") {
+        return back(res, "/booking.html", "error", "Please log in with a client account to book a car.");
+    }
+
+    // 2. Kontrollo datat
+    const today = new Date().toISOString().slice(0, 10);
+    if (start_date < today) {
+        return back(res, "/booking.html", "error", "The pick-up date can't be in the past.");
+    }
+
+    const days = (new Date(end_date) - new Date(start_date)) / (1000 * 60 * 60 * 24);
+    if (!(days > 0)) {
+        return back(res, "/booking.html", "error", "The return date must be after the pick-up date.");
+    }
+
+    try {
+        const pool = await db;
+
+        // 3. Merr cmimin e vetures nga databaza
+        const result = await pool.request()
+            .input("id", car_id)
+            .query("SELECT price_per_day, status FROM cars WHERE id = @id");
+
+        const car = result.recordset[0];
+        if (!car || car.status === "MAINTENANCE") {
+            return back(res, "/booking.html", "error", "This car can't be booked right now.");
+        }
+
+        // 4. Llogarit totalin dhe ruaje rezervimin
+        const total = days * car.price_per_day;
+
+        await pool.request()
+            .input("user_id", user.id)
+            .input("car_id", car_id)
+            .input("location_id", location_id)
+            .input("start_date", start_date)
+            .input("end_date", end_date)
+            .input("total", total)
+            .query(`INSERT INTO reservations (user_id, car_id, pickup_location_id, start_date, end_date, total_price)
+                    VALUES (@user_id, @car_id, @location_id, @start_date, @end_date, @total)`);
+
+        back(res, "/my-reservations.html", "success",
+            "Your reservation was sent! Total: €" + total + ". You will see here when we confirm it.");
+    } catch (err) {
+        // Trigger-i ne databaze ndalon rezervimet qe mbivendosen
+        if (err.message.includes("already booked")) {
+            return back(res, "/booking.html?car=" + car_id, "error",
+                "This car is already booked for these dates. Please choose other dates or another car.");
+        }
+        back(res, "/booking.html", "error", err.message);
+    }
+});
+
+// ---------- My reservations (klienti) ----------
+
+// Rezervimet e klientit qe eshte i kycur
+app.get("/api/my-reservations", async (req, res) => {
+    if (!req.session.user) {
+        return res.status(401).json({ error: "Please log in" });
+    }
+
+    const pool = await db;
+    const result = await pool.request()
+        .input("user_id", req.session.user.id)
+        .query(`
+            SELECT r.id,
+                   c.brand + ' ' + c.model AS car,
+                   c.image_url,
+                   l.name AS location,
+                   CONVERT(VARCHAR(10), r.start_date, 104) AS start_date,
+                   CONVERT(VARCHAR(10), r.end_date, 104) AS end_date,
+                   r.total_price, r.status
+            FROM reservations r
+            JOIN cars c ON c.id = r.car_id
+            JOIN locations l ON l.id = r.pickup_location_id
+            WHERE r.user_id = @user_id
+            ORDER BY r.created_at DESC
+        `);
+    res.json(result.recordset);
+});
+
+// Klienti anulon rezervimin e vet (vetem kur eshte PENDING)
+app.post("/api/my-reservations/:id/cancel", async (req, res) => {
+    if (!req.session.user) {
+        return back(res, "/login.html", "error", "Please log in first.");
+    }
+
+    const pool = await db;
+    const result = await pool.request()
+        .input("id", req.params.id)
+        .input("user_id", req.session.user.id)
+        .query(`UPDATE reservations SET status = 'CANCELLED'
+                WHERE id = @id AND user_id = @user_id AND status = 'PENDING'`);
+
+    // rowsAffected = sa rreshta u ndryshuan (0 = nuk eshte e tija ose nuk eshte me PENDING)
+    if (result.rowsAffected[0] === 0) {
+        return back(res, "/my-reservations.html", "error", "This reservation can't be cancelled.");
+    }
+
+    back(res, "/my-reservations.html", "success", "Your reservation was cancelled.");
+});
+
 // ---------- Veturat, kategorite, lokacionet ----------
 
 // Te gjitha veturat
@@ -156,7 +295,8 @@ app.get("/api/cars", async (req, res) => {
         const pool = await db;
         const result = await pool.request().query(`
             SELECT c.id, c.brand, c.model, c.year, c.seats, c.transmission,
-                   c.fuel_type, c.price_per_day, c.image_url, c.status,
+                   c.fuel_type, c.price_per_day, c.image_url,
+                   ${CAR_STATUS} AS status,
                    cat.name AS category
             FROM cars c
             JOIN categories cat ON cat.id = c.category_id
@@ -166,6 +306,24 @@ app.get("/api/cars", async (req, res) => {
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
+});
+
+// Datat kur nje veture eshte e zene (per faqen Book a car)
+// Kthen vetem datat, pa emrat e klienteve
+app.get("/api/cars/:id/booked", async (req, res) => {
+    const pool = await db;
+    const result = await pool.request()
+        .input("id", req.params.id)
+        .query(`
+            SELECT CONVERT(VARCHAR(10), start_date, 104) AS start_date,
+                   CONVERT(VARCHAR(10), end_date, 104) AS end_date
+            FROM reservations
+            WHERE car_id = @id
+              AND status IN ('PENDING', 'CONFIRMED')
+              AND end_date > CAST(GETDATE() AS DATE)
+            ORDER BY reservations.start_date
+        `);
+    res.json(result.recordset);
 });
 
 // Nje veture (per formen Edit)
@@ -197,7 +355,7 @@ app.get("/api/stats", adminOnly, async (req, res) => {
     const result = await pool.request().query(`
         SELECT
             (SELECT COUNT(*) FROM cars) AS cars,
-            (SELECT COUNT(*) FROM cars WHERE status = 'AVAILABLE') AS available,
+            (SELECT COUNT(*) FROM cars c WHERE ${CAR_STATUS} = 'AVAILABLE') AS available,
             (SELECT COUNT(*) FROM reservations WHERE status = 'PENDING') AS pending,
             (SELECT COUNT(*) FROM users WHERE role = 'CLIENT') AS clients
     `);
@@ -324,6 +482,28 @@ app.post("/api/cars/:id/delete", adminOnly, async (req, res) => {
     } catch (err) {
         back(res, "/dashboard-cars.html", "error", "This car has reservations, so it can't be deleted.");
     }
+});
+
+// Mesazhet nga forma Contact
+app.get("/api/messages", adminOnly, async (req, res) => {
+    const pool = await db;
+    const result = await pool.request().query(`
+        SELECT id, name, email, subject, message,
+               FORMAT(created_at, 'dd.MM.yyyy HH:mm') AS sent
+        FROM contact_messages
+        ORDER BY created_at DESC
+    `);
+    res.json(result.recordset);
+});
+
+// Fshij nje mesazh
+app.post("/api/messages/:id/delete", adminOnly, async (req, res) => {
+    const pool = await db;
+    await pool.request()
+        .input("id", req.params.id)
+        .query("DELETE FROM contact_messages WHERE id = @id");
+
+    back(res, "/dashboard-messages.html", "success", "The message was deleted.");
 });
 
 // Shto lokacion

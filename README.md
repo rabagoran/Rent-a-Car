@@ -66,6 +66,23 @@ The site must be opened through the server (not by double-clicking the files).
 - `cars.js` - cars on `index.html` and `cars.html`
 - `dashboard.js`, `dashboard-cars.js`, `dashboard-add-car.js`, `dashboard-reservations.js`, `dashboard-clients.js`, `dashboard-locations.js` - one file for each dashboard page
 
-## Next step
+## Step 4: Booking
 
-Booking: save reservations from `booking.html`.
+- `booking.html` takes the cars and locations from the database.
+- The price is shown while you choose: days × price per day.
+- Only logged-in clients can book. The reservation is saved as **PENDING**, and the admin confirms or cancels it in the dashboard.
+- The same car can't be booked twice for dates that overlap (a trigger in the database blocks it), and the page shows a clear message.
+- The **Book** button on each car opens the booking page with that car already selected (`booking.html?car=ID`).
+- `public/js/booking.js` fills the form and calculates the price.
+
+## Step 5: My reservations and Messages
+
+- `my-reservations.html` - a logged-in client sees their own bookings and the status (waiting for confirmation, confirmed, cancelled). A booking that is still waiting can be cancelled by the client.
+- After booking, the client goes straight to **My reservations**. The menu shows a **My reservations** link when a client is logged in.
+- `dashboard-messages.html` - the admin reads the messages sent from the Contact page and can delete them.
+- `public/js/my-reservations.js` and `public/js/dashboard-messages.js` fill these pages from the database.
+
+## Step 6: Car availability
+
+- On `booking.html`, under the chosen car, the page shows the dates when the car is already booked (pending or confirmed), so the client can pick free dates.
+- A car shows **RENTED** automatically on the days of a confirmed reservation, and goes back to **AVAILABLE** after. A car in **MAINTENANCE** stays in maintenance. The "Available cars" count on the dashboard uses the same rule.

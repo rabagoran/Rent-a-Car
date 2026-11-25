@@ -388,6 +388,17 @@ textarea {
     color: #1d6b36;
 }
 
+/* Datat kur vetura eshte e zene (ne booking) */
+.booked {
+    margin: -5px 0 15px;
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.booked strong {
+    color: #9b1c1c;
+}
+
 /* Permbledhja e cmimit ne booking */
 .summary {
     background: var(--light);
@@ -420,6 +431,131 @@ textarea {
 
 .contact-info p {
     margin: 0 0 10px;
+}
+
+/* ===== Tabelat (dashboard dhe My reservations) ===== */
+
+/* ===== Paneli (kutia e bardhe) ===== */
+.panel {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 25px;
+    overflow-x: auto;
+}
+
+.panel h2 {
+    margin: 0 0 15px;
+    color: var(--navy);
+    font-size: 20px;
+}
+
+/* ===== Tabela ===== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+}
+
+th,
+td {
+    text-align: left;
+    padding: 12px 10px;
+    border-bottom: 1px solid var(--line);
+    white-space: nowrap;
+}
+
+th {
+    background: var(--light);
+    color: var(--navy);
+}
+
+tr:hover td {
+    background: #fafbfc;
+}
+
+/* ===== Statusi (etiketat me ngjyra) ===== */
+.status {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.pending {
+    background: #fff4d6;
+    color: #8a6100;
+}
+
+.confirmed,
+.available {
+    background: #dcf5e3;
+    color: #1d6b36;
+}
+
+.cancelled,
+.maintenance {
+    background: #fde2e2;
+    color: #9b1c1c;
+}
+
+.completed,
+.rented {
+    background: #e2ebf7;
+    color: var(--blue);
+}
+
+/* Rreshti kur tabela eshte e zbrazet */
+.empty {
+    text-align: center;
+    color: var(--muted);
+    padding: 30px 10px;
+}
+
+/* ===== Butonat e vegjel ne tabele ===== */
+.btn-small {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 13px;
+    text-decoration: none;
+    background: var(--blue);
+    color: var(--white);
+}
+
+.btn-red {
+    background: #c0392b;
+}
+
+button.btn-small {
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+/* Forma e vogel brenda tabeles (butonat Delete, Confirm, Cancel) */
+form.inline {
+    display: inline;
+}
+
+/* Foto e vogel e vetures ne tabele */
+.thumb {
+    display: inline-block;
+    max-width: none;
+    width: 60px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 4px;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+/* Teksti i gjate ne tabele (p.sh. mesazhet) kalon ne rresht te ri */
+td.wrap {
+    white-space: normal;
+    min-width: 250px;
 }
 
 /* ===== Footer ===== */

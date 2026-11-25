@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages | Dashboard | RentACar</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <div class="dashboard">
+
+        <!-- Menuja anash -->
+        <aside class="sidebar">
+            <a class="logo" href="index.html">Rent<span>ACar</span></a>
+            <ul>
+                <li><a href="dashboard.html">Overview</a></li>
+                <li><a href="dashboard-cars.html">Cars</a></li>
+                <li><a href="dashboard-add-car.html">Add car</a></li>
+                <li><a href="dashboard-reservations.html">Reservations</a></li>
+                <li><a href="dashboard-clients.html">Clients</a></li>
+                <li><a href="dashboard-locations.html">Locations</a></li>
+                <li><a class="active" href="dashboard-messages.html">Messages</a></li>
+            </ul>
+            <ul class="logout">
+                <li><a href="index.html">Back to site</a></li>
+                <li><a href="/api/logout">Log out</a></li>
+            </ul>
+        </aside>
+
+        <!-- Permbajtja -->
+        <main class="content">
+            <div class="top-bar">
+                <div>
+                    <h1>Messages</h1>
+                    <p>Messages sent from the Contact page.</p>
+                </div>
+            </div>
+
+            <p class="message" id="message"></p>
+
+            <div class="panel">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Subject</th>
+                        <th>Message</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <!-- Mesazhet vijne nga databaza (js/dashboard-messages.js) -->
+                    <tbody id="message-rows">
+                    <tr>
+                        <td class="empty" colspan="6">Loading...</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/helpers.js"></script>
+    <script src="js/dashboard-messages.js"></script>
+</body>
+</html>

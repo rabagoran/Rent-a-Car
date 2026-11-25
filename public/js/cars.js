@@ -22,7 +22,7 @@ fetch("/api/cars")
                         <p>${car.category} · ${car.seats} seats · ${car.transmission}</p>
                         <div class="car-price">
                             <strong>€${car.price_per_day} / day</strong>
-                            <a class="btn" href="booking.html">Book</a>
+                            <a class="btn" href="booking.html?car=${car.id}">Book</a>
                         </div>
                     </div>
                 </div>`;
